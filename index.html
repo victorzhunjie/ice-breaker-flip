@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ice Breaker App</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- App Title -->
+  <div class="app-title">
+    <h1>轻松破冰 – Ice Breaker</h1>
+  </div>
+
+  <div class="top-right-buttons">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <button class="language-toggle" onclick="toggleLanguage()">EN + 中</button>
+    <button class="adult-toggle" onclick="toggleAdultMode()">🔞 Adult</button>
+  </div>
+
+  <div class="card-container">
+    <div class="card" id="flip-card">
+      <!-- Front: Category Selection -->
+      <div class="card-face front">
+        <h2>SELECT A CATEGORY</h2>
+        <div id="category-buttons" class="category-grid"></div>
+      </div>
+
+      <!-- Back: Question -->
+      <div class="card-face back" id="question-back">
+        <h2 id="question-category"></h2>
+        <div class="question-text" id="question-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    &copy; 2025 黄俊杰 All rights reserved.
+  </footer>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
