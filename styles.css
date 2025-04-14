@@ -47,6 +47,7 @@ body.dark {
   cursor: pointer;
 }
 
+.sound-toggle,
 .language-toggle,
 .theme-toggle {
   padding: 8px 14px;
@@ -154,7 +155,7 @@ body.dark .footer {
   color: white;
   font-weight: 600;
   text-align: center;
-  height: 100px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;

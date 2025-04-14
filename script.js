@@ -1,9 +1,10 @@
 const flipSound = new Audio('flip.mp3');
-
-let currentLanguage = sessionStorage.getItem('language') || 'en';
-let showAdultCategory = sessionStorage.getItem('showAdult') === 'true';
 const currentTheme = localStorage.getItem('theme') || 'light';
+let soundEnabled = localStorage.getItem('soundEnabled') === 'true';
+let currentLanguage = localStorage.getItem('language') || 'en';
+let showAdultCategory = localStorage.getItem('showAdult') === 'true';
 
+// Apply stored theme on page load
 if (currentTheme === 'dark') {
   document.body.classList.add('dark');
 }
@@ -11,18 +12,60 @@ if (currentTheme === 'dark') {
 document.addEventListener('DOMContentLoaded', () => {
   const languageToggle = document.querySelector('.language-toggle');
   const adultToggle = document.querySelector('.adult-toggle');
+  const soundToggle = document.querySelector('.sound-toggle');
+  const themeToggle = document.querySelector('.theme-toggle');
   const card = document.querySelector('.card');
   const back = document.querySelector('.back');
 
-  // Function to set language and update UI accordingly
+  // ===== SOUND FUNCTIONS =====
+  function toggleSound() {
+    soundEnabled = !soundEnabled;
+    localStorage.setItem('soundEnabled', soundEnabled);
+    updateSoundToggleLabel();
+  }
+
+  function playFlipSound() {
+    if (soundEnabled) {
+      flipSound.currentTime = 0;
+      flipSound.play().catch(err => console.warn('Flip sound error:', err));
+    }
+  }
+
+  function updateSoundToggleLabel() {
+    if (soundToggle) {
+      soundToggle.textContent = soundEnabled ? '🔊 Sound ON' : '🔇 Sound OFF';
+    }
+  }
+
+  if (soundToggle) {
+    soundToggle.addEventListener('click', toggleSound);
+    updateSoundToggleLabel();
+  }
+
+  // ===== THEME TOGGLE =====
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() {
+    themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+    updateThemeIcon();
+  }
+
+  // ===== LANGUAGE FUNCTIONS =====
   function setLanguage(lang) {
     currentLanguage = lang;
     sessionStorage.setItem('language', currentLanguage);
-    languageToggle.textContent = getLanguageLabel(currentLanguage); // Update button text
+    languageToggle.textContent = getLanguageLabel(currentLanguage);
     renderCategories();
   }
 
-  // Returns label based on selected language
   function getLanguageLabel(lang) {
     switch (lang) {
       case 'zh': return '中文';
@@ -33,49 +76,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  languageToggle.addEventListener('click', () => {
-    switch (currentLanguage) {
-      case 'en':
-        setLanguage('zh');
-        break;
-      case 'zh':
-        setLanguage('en+zh');
-        break;
-      case 'en+zh':
-        setLanguage('en+zh+roman');
-        break;
-      case 'en+zh+roman':
-        setLanguage('en');
-        break;
-      default:
-        setLanguage('en');
-        break;
-    }
-  });
+  if (languageToggle) {
+    languageToggle.addEventListener('click', () => {
+      switch (currentLanguage) {
+        case 'en': setLanguage('zh'); break;
+        case 'zh': setLanguage('en+zh'); break;
+        case 'en+zh': setLanguage('en+zh+roman'); break;
+        case 'en+zh+roman': setLanguage('en'); break;
+        default: setLanguage('en'); break;
+      }
+    });
+  }
 
-  // Adult toggle handler
-  window.toggleAdultMode = () => {
+  // ===== ADULT MODE TOGGLE =====
+  function toggleAdultMode() {
     showAdultCategory = !showAdultCategory;
     sessionStorage.setItem('showAdult', showAdultCategory);
     adultToggle.textContent = showAdultCategory ? '🔞 Adult ✅' : '🔞 Adult';
     renderCategories();
-  };
+  }
 
-  // Expose dark theme toggle to global scope
-  window.toggleTheme = () => {
-    document.body.classList.toggle('dark');
-    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-  };
+  if (adultToggle) {
+    adultToggle.addEventListener('click', toggleAdultMode);
+  }
 
-  // Render category buttons based on questions.js data
+  // ===== CATEGORY RENDERING =====
   function renderCategories() {
     const container = document.getElementById('category-buttons');
     container.innerHTML = '';
     container.parentElement.querySelector('h2').textContent = getCategoryTitle();
 
-    Object.keys(categories).forEach((cat) => {
-      if (cat === "Explore Deeper") return;
-      if (cat === "Adult" && !showAdultCategory) return;
+    for (const cat of Object.keys(categories)) {
+      if (cat === "Attraction" && !showAdultCategory) continue;
+      if (cat === "Adult" && !showAdultCategory) continue;
 
       const btn = document.createElement('button');
       btn.className = 'category-btn';
@@ -85,56 +118,44 @@ document.addEventListener('DOMContentLoaded', () => {
         showQuestion(cat);
       };
       container.appendChild(btn);
-    });
+    };
   }
 
-  // Get the main title for the category selection
   function getCategoryTitle() {
     switch (currentLanguage) {
-      case 'zh':
-        return '请选择一个类别';
-      case 'en+zh':
-        return 'Select a Category / 请选择一个类别';
-      case 'en+zh+roman':
-        return 'Select a Category / 请选择一个类别 / 选择一个类别';
-      default:
-        return 'Select a Category';
+      case 'zh': return '请选择一个类别';
+      case 'en+zh': return 'Select a Category / 请选择一个类别';
+      case 'en+zh+roman': return 'Select a Category / 请选择一个类别';
+      default: return 'Select a Category';
     }
   }
 
-  // Return category label based on language settings
   function getCategoryLabel(cat) {
     const cnLabels = {
-      "Career": "职业",
-      "Travel": "旅行",
-      "Hobbies": "爱好",
-      "Fun Facts": "趣事",
-      "Technology": "科技",
-      "Explore Deeper": "深入探索",
-      "Adult": "成人"
+      "Career": "职业-Zhí yè",
+      "Travel": "旅行-Lǚ xíng",
+      "Hobbies": "爱好-Ài hào",
+      "Fun Facts": "趣事-Qù shì",
+      "Technology": "科技-Kē jì",
+      "Explore Deeper": "深入探索-Shēn rù tàn suǒ",
+      "Adult": "成人-Chéng rèn",
+      "Dating History": "感情经历-Gǎnqíng jīnglì",
+      "Attraction": "吸引力-Xī yǐn lì"
     };
 
     if (currentLanguage === 'zh') return cnLabels[cat] || cat;
     if (currentLanguage === 'en+zh') return `${cat} / ${cnLabels[cat] || cat}`;
-    if (currentLanguage === 'en+zh+roman') return `${cat} / ${cnLabels[cat] || cat} / ${getRomanization(cat)}`;
+    if (currentLanguage === 'en+zh+roman')
+      // return `${cat} / ${cnLabels[cat] || cat} / ${getRomanization(cat)}`;
+      return `${cat} / ${cnLabels[cat] || cat}`;
     return cat;
   }
 
-  // Add Romanization for Chinese text
   function getRomanization(cat) {
-    const romanization = {
-      "Career": "Zhí yè",
-      "Travel": "Lǚ xíng",
-      "Hobbies": "Ài hào",
-      "Fun Facts": "Qù shì",
-      "Technology": "Kē jì",
-      "Explore Deeper": "Shēn rù tàn suǒ",
-      "Adult": "Chéng rèn"
-    };
     return romanization[cat] || cat;
   }
 
-  // Display a random question when a category button is clicked
+  // ===== SHOW QUESTION =====
   function showQuestion(category) {
     const question = getRandomQuestion(category);
     document.getElementById('question-category').textContent = getCategoryLabel(category);
@@ -143,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
     playFlipSound();
   }
 
-  // Get a random question from the questions list for the selected category
   function getRandomQuestion(category) {
     const cat = categories[category];
     if (currentLanguage === 'en') {
@@ -163,12 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 
-  function playFlipSound() {
-    flipSound.currentTime = 0;
-    flipSound.play().catch(err => console.warn('Flip sound error:', err));
-  }
-
-  // Allow clicking the back side to flip back to the category selection
+  // Flip back to category selection
   back.addEventListener('click', () => {
     if (card.classList.contains('flipped')) {
       card.classList.remove('flipped');
@@ -178,5 +193,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial UI setup
   setLanguage(currentLanguage);
-  adultToggle.textContent = showAdultCategory ? '🔞 Adult ✅' : '🔞 Adult';
+  if (adultToggle) adultToggle.textContent = showAdultCategory ? '🔞 Adult ✅' : '🔞 Adult';
 });
