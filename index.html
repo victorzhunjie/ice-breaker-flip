@@ -12,14 +12,31 @@
 
   <!-- App Title -->
   <div class="app-title">
-    <h1>轻松破冰 – Ice Breaker</h1>
+    <h1>轻松破冰 </h1>
+    <h2>Ice Breaker Flip </h2>
   </div>
 
   <div class="top-right-buttons">
     <button class="sound-toggle">🔊 Sound</button>
-    <button class="theme-toggle">🌙</button>
+    <button class="speech-toggle">🔊 Speech</button>
     <button class="language-toggle">EN</button>
-    <button class="adult-toggle">🔞 Adult</button>
+    <button class="settings-toggle">⚙️ Category</button>
+    <button class="theme-toggle">🌙</button>
+  </div>
+
+  <!-- Settings Modal Overlay -->
+  <div id="settings-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <h2>Select Categories</h2>
+      <div id="settings-categories" class="settings-categories">
+        <!-- Dynamically populated checkboxes -->
+      </div>
+      <div class="modal-buttons">
+        <button class="adult-toggle">🔞 Adult</button>
+        <button id="settings-save">Save</button>
+        <button id="settings-cancel">Cancel</button>
+      </div>
+    </div>
   </div>
 
   <div class="card-container">

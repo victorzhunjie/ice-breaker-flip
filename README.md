@@ -1,20 +1,52 @@
 # IceBreakerFlip
 
-**IceBreakerFlip** is an interactive web application designed to help break the ice in social settings by using a card-flipping mechanic. The app allows users to select a category, flip through question cards, and initiate conversations effortlessly. It supports multiple languages, including English, Chinese, and Romanized Chinese, offering a fun way to get to know others.
+**IceBreakerFlip** is an interactive web app designed to break the ice and spark conversations in social settings. With a smooth card-flipping interface and multilingual support, it offers a fun and effortless way to get to know others—whether you're meeting friends, new coworkers, or going on a date.
 
-## Features
+## 🌟 Features
 
-- **Interactive Card Flip**: Users can flip a card to reveal a question, which helps initiate conversations.
-- **Language Support**: Switch between **English**, **Chinese (中文)**, and **Romanized Chinese (拼音)** for better accessibility and language practice.
-- **Theme Toggle**: Switch between light and dark modes for a personalized experience.
-- **Adult Mode**: Option to reveal adult-themed questions for mature audiences.
-- **Responsive Design**: Optimized for mobile and desktop views.
+- **🃏 Interactive Card Flip**  
+  Flip through cards to reveal conversation-starting questions.
 
-## Installation
+- **🌐 Multilingual Support**  
+  Toggle between:
+  - English  
+  - 中文 (Chinese)  
+  - English + 中文  
+  - English + 中文 + 拼音 (Romanized Chinese)
 
-To run the app locally, follow these steps:
+- **🎭 Adult Mode**  
+  Unlock an “Adult” category with more mature, playful questions.
+
+- **🌓 Theme Toggle**  
+  Choose between Light 🌞 and Dark 🌙 themes for your comfort.
+
+- **📱 Responsive Design**  
+  Fully optimized for both mobile and desktop experiences.
+
+- **🔊 Sound Effects**  
+  Optional flip sound for extra tactile feedback.
+
+- **🔁 Loop-Back Mode**  
+  Instead of one random question, cycle through all questions in a chosen category.
+
+- **🔁 Select Categories**  
+  Select categories that you want to display.
+
+### ✅ Currently Implemented
+
+- Category selection with various question sets  
+- Card flip animation (front = category, back = question)  
+- Language toggle with multiple options  
+- Adult mode toggle  
+- Flip sound (with on/off toggle)  
+- Light/Dark mode switch  
+- Loop-back mode for continuous card browsing
+- Categories Selection
+
+## 🚀 Getting Started
+
+To run the app locally:
 
 1. Clone the repository:
-
    ```bash
    git clone https://github.com/victorzhunjie/ice-breaker-flip.git
