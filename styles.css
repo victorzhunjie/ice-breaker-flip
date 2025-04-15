@@ -1,9 +1,40 @@
+/* -------------------------------------------
+   ICE BREAKER APP - Updated Color Scheme
+----------------------------------------------*/
+
+/* ---------- CSS Variables ---------- */
+/* Light mode (Day) variables */
+:root {
+  --bg-day: #ffffff;
+  --text-day: #333333;
+  --title-day: #0077cc;
+  --button-primary-day: #64b5f6;
+  --button-adult-day: #E91E63;
+  --button-theme-day: #FF9800;
+  --card-front-day: linear-gradient(135deg,  #2576e9, #b3dbd3);
+  --card-back-day: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+}
+
+
+/* Dark mode variables */
+body.dark {
+  --bg-dark: #212121;
+  --text-dark: #e0e0e0;
+  --title-dark: #9fa8da;
+  --button-primary-dark: linear-gradient(135deg, #355c7d, #6c5b7b);
+  --button-adult-dark: #f06292;
+  --button-theme-dark: #ffb300;
+  --card-front-dark: linear-gradient(135deg, #2c3e50, #4ca1af);
+  --card-back-dark: linear-gradient(135deg, #355c7d, #6c5b7b);
+}
+
+/* ---------- Global Styles ---------- */
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
-  background: #f0f6fc;
-  color: #000;
+  background: var(--bg-day);
+  color: var(--text-day);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,10 +44,11 @@ body {
 }
 
 body.dark {
-  background: #1e1e1e;
-  color: #eee;
+  background: var(--bg-dark);
+  color: var(--text-dark);
 }
 
+/* ---------- App Title ---------- */
 .app-title {
   text-align: center;
   margin-bottom: 30px;
@@ -25,10 +57,15 @@ body.dark {
 .app-title h1 {
   font-size: 2rem;
   font-weight: bold;
-  color: #2576e9;
+  color: var(--title-day);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+body.dark .app-title h1 {
+  color: var(--title-dark);
+}
+
+/* ---------- Top Right Buttons ---------- */
 .top-right-buttons {
   position: absolute;
   top: 20px;
@@ -39,21 +76,24 @@ body.dark {
 
 .adult-toggle {
   padding: 8px 14px;
-  background: #ff6f91;
+  background: var(--button-adult-day);
   color: white;
   border: none;
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+}
+
+body.dark .adult-toggle {
+  background: var(--button-adult-dark);
 }
 
 .settings-toggle,
 .sound-toggle,
 .speech-toggle,
-.language-toggle,
-.theme-toggle {
+.language-toggle {
   padding: 8px 14px;
-  background: #69b7eb;
+  background: var(--button-primary-day);
   color: white;
   border: none;
   border-radius: 8px;
@@ -61,10 +101,28 @@ body.dark {
   cursor: pointer;
 }
 
-.theme-toggle {
-  background: #ffb347;
+body.dark .settings-toggle,
+body.dark .sound-toggle,
+body.dark .speech-toggle,
+body.dark .language-toggle {
+  background: var(--button-primary-dark);
 }
 
+.theme-toggle {
+  padding: 8px 14px;
+  background: var(--button-theme-day);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+body.dark .theme-toggle {
+  background: var(--button-theme-dark);
+}
+
+/* ---------- Card Container ---------- */
 .card-container {
   perspective: 1000px;
   width: 90%;
@@ -100,28 +158,33 @@ body.dark {
   text-align: center;
 }
 
+/* ---------- Card Faces ---------- */
+/* Light Mode Card Faces */
 .front {
-  background: linear-gradient(135deg, #2576e9, #b3dbd3);
+  background: var(--card-front-day);
 }
 
 .back {
-  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  background: var(--card-back-day);
   transform: rotateY(180deg);
 }
 
+/* Dark Mode Card Faces */
 body.dark .front {
-  background: linear-gradient(135deg, #2b5876, #4e4376);
+  background: var(--card-front-dark);
 }
 
 body.dark .back {
-  background: linear-gradient(135deg, #654ea3, #eaafc8);
+  background: var(--card-back-dark);
 }
 
+/* ---------- Typography ---------- */
 h2 {
   margin-bottom: 30px;
   font-size: 1.2rem;
 }
 
+/* ---------- Footer ---------- */
 .footer {
   position: fixed;
   bottom: 10px;
@@ -138,6 +201,7 @@ body.dark .footer {
   color: rgba(255, 255, 255, 0.3);
 }
 
+/* ---------- Category Grid ---------- */
 .category-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -176,15 +240,14 @@ body.dark .footer {
   margin: 10px 0;
 }
 
-
-/* Settings Overlay Styles */
+/* ---------- Settings Overlay Styles ---------- */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7); /* semi-transparent dark background */
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -206,12 +269,20 @@ body.dark .footer {
   text-align: center;
 }
 
+.modal-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
 .settings-categories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  gap: 16px;
   max-height: 300px;
   overflow-y: auto;
   margin: 20px 0;
 }
-
 /* Increase checkbox size and spacing */
 .settings-categories label {
   display: block;
@@ -221,11 +292,11 @@ body.dark .footer {
 }
 
 .settings-categories input[type="checkbox"] {
-  width: 20px;      /* Increase width */
-  height: 20px;     /* Increase height */
+  width: 20px;
+  height: 20px;
   margin-right: 10px;
   vertical-align: middle;
-  transform: scale(1.2);  /* Scale up further if needed */
+  transform: scale(1.2);
 }
 
 .modal-buttons {
@@ -247,7 +318,6 @@ body.dark .footer {
 .modal-buttons button:hover {
   background-color: #58a3d7;
 }
-
 
 @media (max-width: 600px) {
   .category-btn {
