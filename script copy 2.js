@@ -10,10 +10,8 @@ if (currentTheme === 'dark') {
   document.body.classList.add('dark');
 }
 
-// --- Global variable for loop-back mode ---
-const questionHistory = {};
-
-// --- Global variable for enabled categories ---
+// --- Global variable to store enabled categories ---
+// If not already set, default to all available categories from the `categories` object
 let enabledCategories = JSON.parse(localStorage.getItem('enabledCategories'));
 if (!enabledCategories) {
   // Assuming categories is defined in questions.js
@@ -21,7 +19,7 @@ if (!enabledCategories) {
   localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
 }
 
-// Utility function to shuffle array
+// Utility function: shuffle an array (for loop-back mode, if needed)
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -34,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const languageToggle = document.querySelector('.language-toggle');
   const adultToggle = document.querySelector('.adult-toggle');
   const soundToggle = document.querySelector('.sound-toggle');
+  const speechToggle = document.querySelector('.speech-toggle');
   const themeToggle = document.querySelector('.theme-toggle');
   const card = document.querySelector('.card');
   const back = document.querySelector('.back');
@@ -43,11 +42,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingsSave = document.getElementById('settings-save');
   const settingsCancel = document.getElementById('settings-cancel');
 
-  // ===== SOUND FUNCTIONS =====
+  // --- SPEECH FUNCTIONS ---
+  const speakText = (text) => {
+    if ('speechSynthesis' in window && speechToggle) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = getTextToSpeechLanguage(currentLanguage)
+      window.speechSynthesis.cancel(); // Stop any ongoing speech
+      window.speechSynthesis.speak(utterance);
+    } else {
+      console.log('Sorry, your browser does not support speech synthesis.');
+    }
+  };
+
+  // --- SOUND FUNCTIONS ---
   function toggleSound() {
     soundEnabled = !soundEnabled;
     localStorage.setItem('soundEnabled', soundEnabled);
     updateSoundToggleLabel();
+  }
+
+  function toggleSpeech() {
+    speechEnabled = !speechEnabled;
+    localStorage.setItem('speechEnabled', speechEnabled);
+    updateSpeechToggleLabel();
   }
 
   function playFlipSound() {
@@ -63,12 +80,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function updateSpeechToggleLabel() {
+    if (speechToggle) {
+      speechToggle.textContent = speechEnabled ? '🔊 Speech ON' : '🔇 Speech OFF';
+    }
+  }
+
   if (soundToggle) {
     soundToggle.addEventListener('click', toggleSound);
     updateSoundToggleLabel();
   }
 
-  // ===== THEME TOGGLE FUNCTIONS =====
+  if (speechToggle) {
+    speechToggle.addEventListener('click', toggleSpeech);
+    updateSpeechToggleLabel();
+  }
+
+  // --- THEME TOGGLE FUNCTIONS ---
   function toggleTheme() {
     document.body.classList.toggle('dark');
     localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
@@ -84,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateThemeIcon();
   }
 
-  // ===== LANGUAGE FUNCTIONS =====
+  // --- LANGUAGE FUNCTIONS ---
   function setLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('language', currentLanguage);
@@ -103,17 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Cycle through languages with the toggle button
-  const languageCycle = ['en', 'zh', 'en+zh', 'en+zh+roman', 'yue'];
-  if (languageToggle) {
-    languageToggle.addEventListener('click', () => {
-      const currentIndex = languageCycle.indexOf(currentLanguage);
-      const nextIndex = (currentIndex + 1) % languageCycle.length;
-      setLanguage(languageCycle[nextIndex]);
-    });
-  }
-
-  // Get language for speech synthesis
   function getTextToSpeechLanguage(currentLanguage) {
     switch (currentLanguage) {
       case 'yue': return 'zh-HK';
@@ -125,41 +142,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ===== SPEECH FUNCTIONS =====
-  const speakText = (text) => {
-    if ('speechSynthesis' in window && speechEnabled) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = getTextToSpeechLanguage(currentLanguage);
-      window.speechSynthesis.cancel(); // Stop any ongoing speech
-      window.speechSynthesis.speak(utterance);
-    } else {
-      console.log("Speech synthesis not supported or disabled.");
-    }
-  };
-
-  function toggleSpeech() {
-    speechEnabled = !speechEnabled;
-    localStorage.setItem('speechEnabled', speechEnabled);
-    updateSpeechToggleLabel();
+  const languageCycle = ['en', 'zh', 'en+zh', 'en+zh+roman', 'yue'];
+  if (languageToggle) {
+    languageToggle.addEventListener('click', () => {
+      const currentIndex = languageCycle.indexOf(currentLanguage);
+      const nextIndex = (currentIndex + 1) % languageCycle.length;
+      setLanguage(languageCycle[nextIndex]);
+    });
   }
 
-  function updateSpeechToggleLabel() {
-    const speechToggle = document.querySelector('.speech-toggle');
-    if (speechToggle) {
-      speechToggle.textContent = speechEnabled ? '🔊 Speech ON' : '🔇 Speech OFF';
-    }
-  }
-
-  const speechToggle = document.querySelector('.speech-toggle');
-  if (speechToggle) {
-    speechToggle.addEventListener('click', toggleSpeech);
-    updateSpeechToggleLabel();
-  }
-
-  // ===== ADULT MODE TOGGLE =====
+  // --- ADULT MODE TOGGLE ---
   function toggleAdultMode() {
     showAdultCategory = !showAdultCategory;
-    localStorage.setItem('showAdult', showAdultCategory);
+    sessionStorage.setItem('showAdult', showAdultCategory);
     adultToggle.textContent = showAdultCategory ? '🔞 Adult ✅' : '🔞 Adult';
     renderCategories();
   }
@@ -168,10 +163,12 @@ document.addEventListener('DOMContentLoaded', () => {
     adultToggle.addEventListener('click', toggleAdultMode);
   }
 
-  // ===== SETTINGS OVERLAY FUNCTIONS =====
+  // --- SETTINGS OVERLAY FUNCTIONS ---
   function openSettings() {
+    // Populate the modal with checkboxes for each category
     settingsCategoriesContainer.innerHTML = '';
     Object.keys(categories).forEach(cat => {
+      // Create label and checkbox
       const label = document.createElement('label');
       label.style.display = "block";
       label.style.marginBottom = "10px";
@@ -195,8 +192,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   settingsCancel.addEventListener('click', closeSettings);
-  
+
   settingsSave.addEventListener('click', () => {
+    // Gather all checked categories
     const checkboxes = settingsCategoriesContainer.querySelectorAll('input[type="checkbox"]');
     enabledCategories = [];
     checkboxes.forEach(cb => {
@@ -209,16 +207,17 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCategories();
   });
 
-  // ===== RENDERING FUNCTIONS =====
+  // --- RENDERING FUNCTIONS ---
   function renderCategories() {
     const container = document.getElementById('category-buttons');
     container.innerHTML = '';
     container.parentElement.querySelector('h2').textContent = getCategoryTitle();
+
     Object.keys(categories).forEach((cat) => {
+      // Check settings: only display if enabled
       if (!enabledCategories.includes(cat)) return;
       if (cat === "Adult" && !showAdultCategory) return;
-      if (cat === "Explore Deeper") return;
-      
+
       const btn = document.createElement('button');
       btn.className = 'category-btn';
       btn.textContent = getCategoryLabel(cat);
@@ -238,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
       default: return 'Select a Category';
     }
   }
-  
+
   function getCategoryLabel(cat) {
     const cnLabels = {
       "Career": "职业",
@@ -259,39 +258,38 @@ document.addEventListener('DOMContentLoaded', () => {
     return cat;
   }
 
-  // ===== SHOW QUESTION FUNCTION =====
+  // --- SHOW QUESTION FUNCTION ---
   function showQuestion(category) {
-    const { question, speech } = getRandomQuestion(category);
-    // Speak the question (if speechEnabled and supported)
+    const { question, speech} = getRandomQuestion(category);
     speakText(speech);
     document.getElementById('question-category').textContent = getCategoryLabel(category);
     document.getElementById('question-content').innerHTML = question;
     card.classList.add('flipped');
     playFlipSound();
   }
-  
-  // ===== LOOP-BACK MODE FOR QUESTIONS =====
+
+  // Loop-back mode using questionHistory
+  const questionHistory = {};
   function getRandomQuestion(category) {
     const cat = categories[category];
-    if (!cat) return { question: "No questions available.", speech: "" };
-    
+    if (!cat) return "No questions available.";
+
     const questionCount = cat.en.length;
     if (!questionHistory[category] || questionHistory[category].length === 0) {
       questionHistory[category] = Array.from({ length: questionCount }, (_, i) => i);
       shuffleArray(questionHistory[category]);
     }
-    
     const index = questionHistory[category].pop();
     let question = '';
     let speech = '';
     switch (currentLanguage) {
       case 'en':
         question = cat.en[index];
-        speech = question;
+        speech = question
         break;
       case 'zh':
         question = cat.zh[index];
-        speech = question;
+        speech = question
         break;
       case 'en+zh':
         question = `${cat.en[index]}<br><br>${cat.zh[index]}`;
@@ -307,23 +305,23 @@ document.addEventListener('DOMContentLoaded', () => {
         break;  
       default:
         question = cat.en[index];
-        speech = question;
+        speech = question
     }
     return { question, speech };
   }
-  
+
   function randomItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
-  
-  // ===== FLIP BACK TO CATEGORY SELECTION =====
+
+  // --- FLIP BACK TO CATEGORY SELECTION ---
   back.addEventListener('click', () => {
     if (card.classList.contains('flipped')) {
       card.classList.remove('flipped');
       playFlipSound();
     }
   });
-  
+
   // Initial UI setup
   setLanguage(currentLanguage);
   adultToggle.textContent = showAdultCategory ? '🔞 Adult ✅' : '🔞 Adult';
