@@ -43,6 +43,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingsSave = document.getElementById('settings-save');
   const settingsCancel = document.getElementById('settings-cancel');
 
+  const toast = document.getElementById('toast');
+
+  function showToast(message) {
+    console.log('----')
+
+    toast.textContent = message;
+    toast.classList.add('show');
+  
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2000);
+  }
+
+  // ===== SETTINGS TOGGLE =====
+
+const resetLoopbackBtn = document.querySelector('.reset-loopback');
+
+if (resetLoopbackBtn) {
+  resetLoopbackBtn.addEventListener('click', () => {
+    for (let key in questionHistory) {
+      questionHistory[key] = [];
+    }
+    showToast('✅ Refresh Question');
+  });
+}
+
   // ===== SOUND FUNCTIONS =====
   function toggleSound() {
     soundEnabled = !soundEnabled;
@@ -310,10 +336,6 @@ document.addEventListener('DOMContentLoaded', () => {
         speech = question;
     }
     return { question, speech };
-  }
-  
-  function randomItem(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
   }
   
   // ===== FLIP BACK TO CATEGORY SELECTION =====

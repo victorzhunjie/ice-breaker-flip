@@ -11,8 +11,8 @@
   --button-primary-day: #64b5f6;
   --button-adult-day: #E91E63;
   --button-theme-day: #FF9800;
-  --card-front-day: linear-gradient(135deg,  #2576e9, #b3dbd3);
-  --card-back-day: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  --card-front-day: linear-gradient(135deg,  #1a56aa, #b3dbd3);
+  --card-back-day: linear-gradient(135deg, #f275ce, #a6c1ee);
 }
 
 
@@ -24,8 +24,8 @@ body.dark {
   --button-primary-dark: linear-gradient(135deg, #355c7d, #6c5b7b);
   --button-adult-dark: #f06292;
   --button-theme-dark: #ffb300;
-  --card-front-dark: linear-gradient(135deg, #2c3e50, #4ca1af);
-  --card-back-dark: linear-gradient(135deg, #355c7d, #6c5b7b);
+  --card-front-dark: linear-gradient(135deg, #355c7d, #6c5b7b);
+  --card-back-dark: linear-gradient(135deg, #2c3e50, #21555d); 
 }
 
 /* ---------- Global Styles ---------- */
@@ -88,6 +88,7 @@ body.dark .adult-toggle {
   background: var(--button-adult-dark);
 }
 
+.reset-loopback,
 .settings-toggle,
 .sound-toggle,
 .speech-toggle,
@@ -102,6 +103,7 @@ body.dark .adult-toggle {
 }
 
 body.dark .settings-toggle,
+body.dark .reset-loopback,
 body.dark .sound-toggle,
 body.dark .speech-toggle,
 body.dark .language-toggle {
@@ -235,6 +237,7 @@ body.dark .footer {
 }
 
 .question-text {
+  /* color: rgba(0, 0, 0, 0.3); */
   font-size: 1.1rem;
   line-height: 1.6;
   margin: 10px 0;
@@ -317,6 +320,26 @@ body.dark .footer {
 
 .modal-buttons button:hover {
   background-color: #58a3d7;
+}
+
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 200px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 8px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
 }
 
 @media (max-width: 600px) {
