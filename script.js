@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'Fun Facts':'趣事',
       Career:'职业',
       Travel:'旅行',
-      Reflection : "/思考人生",
+      Reflection : "思考人生",
       Technology:'科技',
       'Dating History':'感情经历',
       'Dating':'约会',
