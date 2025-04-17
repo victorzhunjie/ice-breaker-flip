@@ -1,7 +1,7 @@
 /* -------------------------------------------
    ICE BREAKER APP - INTRO
 ----------------------------------------------*/
-.hidden {
+/* .hidden {
   display: none;
 }
 
@@ -26,7 +26,7 @@
   opacity: 0;
   animation: logoAppear 0.5s forwards;
   animation-delay: 0.5s;
-}
+} */
 
 @keyframes logoAppear {
   to {
@@ -127,7 +127,7 @@ body {
   gap: 5px;
   margin: 10px 0;
   text-align: center;
-  animation: fadeSlideIn 3s ease-out forwards;
+  animation: fadeSlideIn 1s ease-out forwards;
   opacity: 0;
   transform: translateY(-20px);
 }

@@ -151,6 +151,17 @@ document.addEventListener('DOMContentLoaded', () => {
       default: return 'EN';
     }
   }
+
+  function getLanguageLabel(lang) {
+    switch(lang){
+      case 'zh': return '中文';
+      case 'en+zh': return 'EN + 中文';
+      case 'en+zh+roman': return 'EN + 中文 + 拼音';
+      case 'yue': return 'EN + 粤语';
+      default: return 'EN';
+    }
+  }
+
   languageToggle?.addEventListener('click', () => {
     const i = languageCycle.indexOf(currentLanguage);
     setLanguage(languageCycle[(i+1)%languageCycle.length]);
@@ -170,7 +181,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // —— SETTINGS OVERLAY ——
   function addCategoryCheckbox(cat) {
     const label = document.createElement('label');
-    label.innerHTML = `<input type="checkbox" value="${cat}" ${enabledCategories.includes(cat)?'checked':''}/> ${cat}`;
+    console.log('--', currentLanguage)
+
+    // case 'zh': q=set.zh[idx]; sp=q; break;
+    // case 'en+zh': q=`${set.en[idx]}<br><br>${set.zh[idx]}`; sp=set.zh[idx]; break;
+    // case 'en+zh+roman':
+    // case 'yue':
+      label.innerHTML = `<input type="checkbox" value="${cat}" ${enabledCategories.includes(cat)?'checked':''}/> ${cat}`;
     settingsCats.append(label);
   }
   function openSettings() {
@@ -237,10 +254,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function getCategoryLabel(cat){
     const cn = {
-      Career:'职业',Travel:'旅行',Hobbies:'爱好',
-      'Fun Facts':'趣事',Technology:'科技',
-      'Explore Deeper':'深入探索',Adult:'成人',
-      'Dating History':'感情经历',Attraction:'吸引力',
+      'Get to Know You': '认识你',
+      Hobbies:'爱好',
+      'Fun Facts':'趣事',
+      Career:'职业',
+      Travel:'旅行',
+      Reflection : "/思考人生",
+      Technology:'科技',
+      'Dating History':'感情经历',
+      'Dating':'约会',
       Random:'随机'
     };
     if(currentLanguage==='zh') return cn[cat]||cat;
