@@ -2,19 +2,35 @@
    ICE BREAKER APP - Updated Color Scheme
 ----------------------------------------------*/
 
-.logo-container {
+.title-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 20px 0;
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
   animation: fadeSlideIn 3s ease-out forwards;
   opacity: 0;
   transform: translateY(-20px);
 }
 
-.logo {
-  height: 100px;
-  max-width: 400px;
+.title-logo-container .logo {
+  height: 60px;
+  width: auto;
+  max-width: 100px;
   object-fit: contain;
+}
+
+.title-logo-container h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--title-day);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+body.dark .title-logo-container h1 {
+  color: var(--title-dark);
+  text-shadow: 2px 2px 4px rgba(244, 239, 239, 0.5);
 }
 
 /* Animation keyframes */
@@ -262,13 +278,13 @@ body.dark .footer {
   background: rgba(255, 255, 255, 0.15);
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 16px;
-  padding: 20px 16px;
+  padding: 18px 14px;
   font-size: 1.1rem;
   cursor: pointer;
   color: white;
   font-weight: 600;
   text-align: center;
-  height: 80px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
