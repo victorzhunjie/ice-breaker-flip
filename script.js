@@ -5,7 +5,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Wait 3s for animations to complete (1s in, 1s hold, 1s out)
   setTimeout(() => {
     intro.style.display = "none";
-    mainApp.classList.remove("hidden");
+    // mainApp.classList.remove("hidden");
   }, 3000);
 });
 
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Random-toggle
     const randLabel = document.createElement('label');
     randLabel.style.marginTop = '0.5rem';
-    randLabel.innerHTML = `<input id="random-checkbox" type="checkbox" ${useRandomCategory?'checked':''}/> Enable Random`;
+    randLabel.innerHTML = `<input id="random-checkbox" type="checkbox" ${useRandomCategory?'checked':''}/> Random`;
     settingsCats.append(randLabel);
 
     settingsModal.style.display = 'flex';
