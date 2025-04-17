@@ -2,6 +2,34 @@
    ICE BREAKER APP - Updated Color Scheme
 ----------------------------------------------*/
 
+.logo-container {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  animation: fadeSlideIn 2s ease-out forwards;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.logo {
+  height: 100px;
+  max-width: 400px;
+  object-fit: contain;
+}
+
+/* Animation keyframes */
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optional: dark mode support */
+body.dark .logo {
+  filter: brightness(0.85);
+}
+
 /* ---------- CSS Variables ---------- */
 /* Light mode (Day) variables */
 :root {
@@ -18,6 +46,12 @@
 
 /* Dark mode variables */
 body.dark {
+  /* background: var(--bg-dark); */
+  background-color: #e5e5f7;
+  opacity: 1;
+  background-image:  radial-gradient(#111343 0.5px, transparent 0.5px), radial-gradient(#111343 0.5px, #e5e5f7 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0,10px 10px;
   --bg-dark: #212121;
   --text-dark: #e0e0e0;
   --title-dark: #9fa8da;
@@ -30,10 +64,15 @@ body.dark {
 
 /* ---------- Global Styles ---------- */
 body {
+  background-color: #e5e5f7;
+  opacity: 1;
+  background-image:  radial-gradient(#7073d3 0.5px, transparent 0.5px), radial-gradient(#7073d3 0.5px, #e5e5f7 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0,10px 10px;
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  padding: 0;
-  background: var(--bg-day);
+  /* padding: 0;
+  background: var(--bg-day); */
   color: var(--text-day);
   display: flex;
   flex-direction: column;
@@ -41,11 +80,6 @@ body {
   justify-content: center;
   min-height: 100vh;
   transition: background 0.3s, color 0.3s;
-}
-
-body.dark {
-  background: var(--bg-dark);
-  color: var(--text-dark);
 }
 
 /* ---------- App Title ---------- */
@@ -134,7 +168,7 @@ body.dark .theme-toggle {
 .card {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 550px;
   border-radius: 24px;
   transform-style: preserve-3d;
   transition: transform 0.8s;

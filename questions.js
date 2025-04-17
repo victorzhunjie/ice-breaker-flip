@@ -601,7 +601,8 @@ const categories = {
     "Nǐ tōngcháng rúhé xiàng bànlǚ biǎodá ài yì?",
     "Nǐ céngjīng hé biérén fēnxiǎng guò zuì qīnmì de shìqíng shì shénme?",
     "Nǐ duì dì yī cì yuēhuì shí kǒuwěn de kànfǎ shì shénme?"
-  ]
+  ],
+  "Random": {}
 }
 };
 
