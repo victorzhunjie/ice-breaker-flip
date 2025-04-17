@@ -1,3 +1,14 @@
+window.addEventListener("DOMContentLoaded", () => {
+  const intro = document.getElementById("logo-intro");
+  const mainApp = document.getElementById("main-app");
+
+  // Wait 3s for animations to complete (1s in, 1s hold, 1s out)
+  setTimeout(() => {
+    intro.style.display = "none";
+    mainApp.classList.remove("hidden");
+  }, 3000);
+});
+
 // script.js
 const flipSound = new Audio('flip.mp3');
 const currentTheme = localStorage.getItem('theme') || 'light';

@@ -1,4 +1,69 @@
 /* -------------------------------------------
+   ICE BREAKER APP - INTRO
+----------------------------------------------*/
+.hidden {
+  display: none;
+}
+
+.logo-intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000; /* or your desired background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: logoFadeIn 1s ease-out, logoHold 1s 1s ease-out, logoFadeOut 1s 2s ease-out;
+  animation-fill-mode: forwards;
+}
+
+.logo-intro .logo {
+  width: 280px;
+  height: auto;
+  opacity: 0;
+  animation: logoAppear 0.5s forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes logoAppear {
+  to {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes logoHold {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes logoFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
+/* -------------------------------------------
    ICE BREAKER APP - Updated Color Scheme
 ----------------------------------------------*/
 
@@ -19,17 +84,17 @@
 body.dark {
   --bg-dark: #212121;
   --text-dark: #e0e0e0;
-  --title-dark: #9fa8da;
+  --title-dark: #f0f0f3;
   --button-primary-dark: linear-gradient(135deg, #355c7d, #6c5b7b);
   --button-adult-dark: #f06292;
   --button-theme-dark: #ffb300;
   --card-front-dark: linear-gradient(135deg, #355c7d, #6c5b7b);
-  --card-back-dark: linear-gradient(135deg, #2c3e50, #21555d);
+  --card-back-dark: linear-gradient(135deg, #2c3e50, #6e5a9c);
 
   background-color: #dadada;
   opacity: 1;
   background-image: radial-gradient(#eeeeff 0.5px, transparent 0.5px),
-    radial-gradient(#eeeeff 0.5px, #14212d 0.5px);
+    radial-gradient(#eeeeff 0.5px, #384959 0.5px);
   background-size: 20px 20px;
   background-position: 0 0, 10px 10px;
   color: var(--text-dark);
@@ -75,7 +140,7 @@ body {
 }
 
 body.dark .logo {
-  filter: brightness(0.85);
+  filter: brightness(0.95);
 }
 
 .title-logo-container h1 {
