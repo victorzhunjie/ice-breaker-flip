@@ -6,11 +6,11 @@ setTimeout(() => {
 
 
 // Categories
-const categorySets = {
-  Default: categories1,
-  Fun: categories2
-};
-
+// const categorySets = {
+//   Default: categories1,
+//   Fun: categories2
+// };
+const categories = categories1
 const flipSound = new Audio('flip.mp3');
 const currentTheme = localStorage.getItem('theme') || 'light';
 let soundEnabled = localStorage.getItem('soundEnabled') === 'true';
@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnCancel      = document.getElementById('settings-cancel');
   const toast          = document.getElementById('toast');
 
-  let selectedSetName = localStorage.getItem('selectedSet') || 'Default';
-  let categories = categorySets[selectedSetName];
+  // let selectedSetName = localStorage.getItem('selectedSet') || 'Default';
+  // let categories = categorySets[selectedSetName];
 
   function showToast(msg) {
     toast.textContent = msg;
@@ -70,28 +70,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Populate the dropdown
-  Object.keys(categorySets).forEach(name => {
-    const opt = document.createElement('option');
-    opt.value = name;
-    opt.textContent = name;
-    if (name === selectedSetName) opt.selected = true;
-    categoryListSelect.append(opt);
-  });
+  // Object.keys(categorySets).forEach(name => {
+  //   const opt = document.createElement('option');
+  //   opt.value = name;
+  //   opt.textContent = name;
+  //   if (name === selectedSetName) opt.selected = true;
+  //   categoryListSelect.append(opt);
+  // });
 
-  function populateSelect() {
-    // clear any existing options
-    categoryListSelect.innerHTML = "";
+  // function populateSelect() {
+  //   // clear any existing options
+  //   categoryListSelect.innerHTML = "";
   
-    // populate from your categorySets keys
-    Object.keys(categorySets).forEach(name => {
-      const option = document.createElement("option");
-      option.value = name;
-      option.textContent = name;
-      // pre‑select the current set
-      if (name === selectedSetName) option.selected = true;
-      categoryListSelect.appendChild(option);
-    });
-  }
+  //   // populate from your categorySets keys
+  //   Object.keys(categorySets).forEach(name => {
+  //     const option = document.createElement("option");
+  //     option.value = name;
+  //     option.textContent = name;
+  //     // pre‑select the current set
+  //     if (name === selectedSetName) option.selected = true;
+  //     categoryListSelect.appendChild(option);
+  //   });
+  // }
 
   document.querySelector('.settings-toggle').addEventListener('click', () => {
     document.getElementById('settings-modal').style.display = 'block';
@@ -99,16 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // When the user picks a new set:
-  categoryListSelect.addEventListener('change', e => {
-    selectedSetName = e.target.value;
-    localStorage.setItem('selectedSet', selectedSetName);
-    categories = categorySets[selectedSetName];
-    // reset enabled/categories history
-    enabledCategories = Object.keys(categories);
-    localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
-    Object.keys(questionHistory).forEach(cat => questionHistory[cat] = []);
-    renderCategories();
-  });
+  // categoryListSelect.addEventListener('change', e => {
+  //   selectedSetName = e.target.value;
+  //   localStorage.setItem('selectedSet', selectedSetName);
+  //   categories = categorySets[selectedSetName];
+  //   // reset enabled/categories history
+  //   enabledCategories = Object.keys(categories);
+  //   localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
+  //   Object.keys(questionHistory).forEach(cat => questionHistory[cat] = []);
+  //   renderCategories();
+  // });
 
   // —— RANDOM CATEGORY ——
   function toggleRandom() {
