@@ -1,21 +1,22 @@
-// window.addEventListener("DOMContentLoaded", () => {
-//   const intro = document.getElementById("logo-intro");
-//   const mainApp = document.getElementById("main-app");
-
-//   // Wait 3s for animations to complete (1s in, 1s hold, 1s out)
-//   setTimeout(() => {
-//     intro.style.display = "none";
-//     // mainApp.classList.remove("hidden");
-//   }, 3000);
-// });
-
 // script.js
+setTimeout(() => {
+  const intro = document.getElementById('logo-intro');
+  if (intro) intro.remove();
+}, 2000); // match your animation duration
+
+
+// Categories
+const categorySets = {
+  Default: categories1,
+  Fun: categories2
+};
+
 const flipSound = new Audio('flip.mp3');
 const currentTheme = localStorage.getItem('theme') || 'light';
 let soundEnabled = localStorage.getItem('soundEnabled') === 'true';
 let speechEnabled = localStorage.getItem('speechEnabled') === 'true';
 let currentLanguage = localStorage.getItem('language') || 'en';
-let showAdultCategory = localStorage.getItem('showAdult') === 'true';
+// let showAdultCategory = localStorage.getItem('showAdult') === 'true';
 let useRandomCategory = localStorage.getItem('useRandomCategory') === 'true';
 
 if (currentTheme === 'dark') {
@@ -42,8 +43,9 @@ function shuffleArray(array) {
 
 document.addEventListener('DOMContentLoaded', () => {
   // UI references
+  const randomToggleEl = document.querySelector('.random-toggle');
   const languageToggle = document.querySelector('.language-toggle');
-  const adultToggle    = document.querySelector('.adult-toggle');
+  // const adultToggle    = document.querySelector('.adult-toggle');
   const soundToggle    = document.querySelector('.sound-toggle');
   const speechToggleEl = document.querySelector('.speech-toggle');
   const themeToggle    = document.querySelector('.theme-toggle');
@@ -53,15 +55,77 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingsToggle = document.querySelector('.settings-toggle');
   const settingsModal  = document.getElementById('settings-modal');
   const settingsCats   = document.getElementById('settings-categories');
+  const categoryListSelect  = document.getElementById('category-list-select');
   const btnSave        = document.getElementById('settings-save');
   const btnCancel      = document.getElementById('settings-cancel');
   const toast          = document.getElementById('toast');
+
+  let selectedSetName = localStorage.getItem('selectedSet') || 'Default';
+  let categories = categorySets[selectedSetName];
 
   function showToast(msg) {
     toast.textContent = msg;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2000);
   }
+
+  // Populate the dropdown
+  Object.keys(categorySets).forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    if (name === selectedSetName) opt.selected = true;
+    categoryListSelect.append(opt);
+  });
+
+  function populateSelect() {
+    // clear any existing options
+    categoryListSelect.innerHTML = "";
+  
+    // populate from your categorySets keys
+    Object.keys(categorySets).forEach(name => {
+      const option = document.createElement("option");
+      option.value = name;
+      option.textContent = name;
+      // pre‑select the current set
+      if (name === selectedSetName) option.selected = true;
+      categoryListSelect.appendChild(option);
+    });
+  }
+
+  document.querySelector('.settings-toggle').addEventListener('click', () => {
+    document.getElementById('settings-modal').style.display = 'block';
+    populateSelect();
+  });
+
+  // When the user picks a new set:
+  categoryListSelect.addEventListener('change', e => {
+    selectedSetName = e.target.value;
+    localStorage.setItem('selectedSet', selectedSetName);
+    categories = categorySets[selectedSetName];
+    // reset enabled/categories history
+    enabledCategories = Object.keys(categories);
+    localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
+    Object.keys(questionHistory).forEach(cat => questionHistory[cat] = []);
+    renderCategories();
+  });
+
+  // —— RANDOM CATEGORY ——
+  function toggleRandom() {
+    useRandomCategory = !useRandomCategory;
+    localStorage.setItem('useRandomCategory', useRandomCategory);
+    updateRandomLabel();
+    renderCategories();
+  }
+
+  function updateRandomLabel() {
+    randomToggleEl.textContent = useRandomCategory
+      ? '🎲 Random ON'
+      : '🎲 Random';
+  }
+
+  randomToggleEl?.addEventListener('click', toggleRandom);
+  updateRandomLabel();
 
   // Reset loop‑back
   resetLoopback?.addEventListener('click', () => {
@@ -152,53 +216,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function getLanguageLabel(lang) {
-    switch(lang){
-      case 'zh': return '中文';
-      case 'en+zh': return 'EN + 中文';
-      case 'en+zh+roman': return 'EN + 中文 + 拼音';
-      case 'yue': return 'EN + 粤语';
-      default: return 'EN';
-    }
-  }
-
   languageToggle?.addEventListener('click', () => {
     const i = languageCycle.indexOf(currentLanguage);
     setLanguage(languageCycle[(i+1)%languageCycle.length]);
   });
   languageToggle.textContent = getLanguageLabel(currentLanguage);
 
-  // —— ADULT MODE ——
-  function toggleAdultMode() {
-    showAdultCategory = !showAdultCategory;
-    localStorage.setItem('showAdult', showAdultCategory);
-    adultToggle.textContent = showAdultCategory ? '🔞 Adult ✅' : '🔞 Adult';
-    renderCategories();
-  }
-  adultToggle?.addEventListener('click', toggleAdultMode);
-  adultToggle.textContent = showAdultCategory ? '🔞 Adult ✅' : '🔞 Adult';
-
   // —— SETTINGS OVERLAY ——
   function addCategoryCheckbox(cat) {
     const label = document.createElement('label');
     console.log('--', currentLanguage)
-
-    // case 'zh': q=set.zh[idx]; sp=q; break;
-    // case 'en+zh': q=`${set.en[idx]}<br><br>${set.zh[idx]}`; sp=set.zh[idx]; break;
-    // case 'en+zh+roman':
-    // case 'yue':
-      label.innerHTML = `<input type="checkbox" value="${cat}" ${enabledCategories.includes(cat)?'checked':''}/> ${cat}`;
+    label.innerHTML = `<input type="checkbox" value="${cat}" ${enabledCategories.includes(cat) ? 'checked' : ''}/> ${getCategoryLabel(cat)}`;
     settingsCats.append(label);
-  }
+  }  
   function openSettings() {
     settingsCats.innerHTML = '';
     Object.keys(categories).forEach(addCategoryCheckbox);
 
     // Random-toggle
-    const randLabel = document.createElement('label');
-    randLabel.style.marginTop = '0.5rem';
-    randLabel.innerHTML = `<input id="random-checkbox" type="checkbox" ${useRandomCategory?'checked':''}/> Random`;
-    settingsCats.append(randLabel);
+    // const randLabel = document.createElement('label');
+    // randLabel.style.marginTop = '0.5rem';
+    // randLabel.innerHTML = `<input id="random-checkbox" type="checkbox" ${useRandomCategory?'checked':''}/> Random`;
+    // settingsCats.append(randLabel);
 
     settingsModal.style.display = 'flex';
   }
@@ -216,10 +255,10 @@ document.addEventListener('DOMContentLoaded', () => {
       .map(cb => cb.value);
     localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
 
-    // random
-    const randCb = document.getElementById('random-checkbox');
-    useRandomCategory = randCb.checked;
-    localStorage.setItem('useRandomCategory', useRandomCategory);
+    // // random
+    // const randCb = document.getElementById('random-checkbox');
+    // useRandomCategory = randCb.checked;
+    // localStorage.setItem('useRandomCategory', useRandomCategory);
 
     closeSettings();
     renderCategories();
@@ -236,21 +275,32 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderCategories() {
     const cont = document.getElementById('category-buttons');
     cont.innerHTML = '';
-    document.querySelector('.front h2').textContent = getCategoryTitle();
+    // add/remove the 'single-btn' class
+    cont.classList.toggle('single-btn', useRandomCategory);
 
-    Object.keys(categories).forEach(cat => {
-      if (!enabledCategories.includes(cat)) return;
-      if (cat==='Adult' && !showAdultCategory) return;
-      if (cat==='Explore Deeper') return;
-      createBtn(cat, cont);
-    });
-    if (useRandomCategory) createBtn('Random', cont);
+    document.querySelector('.front h2').textContent = getCategoryTitle();
+  
+    if (useRandomCategory) {
+      createBtn('Random', cont);
+    } else {
+      Object.keys(categories).forEach(cat => {
+        if (!enabledCategories.includes(cat)) return;
+        createBtn(cat, cont);
+      });
+    }
   }
-  function getCategoryTitle(){
-    if(currentLanguage==='zh')          return '请选择一个类别';
-    if(currentLanguage==='en+zh')      return 'Select a Category / 请选择一个类别';
-    if(currentLanguage==='en+zh+roman')return 'Select a Category / 请选择一个类别';
-    return 'Select a Category';
+
+  function getCategoryTitle() {
+    switch (currentLanguage) {
+      case 'zh':
+        return '请选择一个类别';
+      case 'en+zh':
+      case 'en+zh+roman':
+      case 'yue':
+        return 'Select a Category / 请选择一个类别';
+      default:
+        return 'Select a Category';
+    }
   }
   function getCategoryLabel(cat){
     const cn = {
@@ -266,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Random:'随机'
     };
     if(currentLanguage==='zh') return cn[cat]||cat;
+    if(currentLanguage==='yue') return cn[cat]||cat;
     if(currentLanguage.startsWith('en+zh')) return `${cat} / ${cn[cat]||cat}`;
     return cat;
   }
@@ -274,7 +325,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function showQuestion(cat) {
     if (cat==='Random') {
       // pick random from enabled
-      const pool = enabledCategories.filter(c=>c!=='Explore Deeper' && (c!=='Adult'||showAdultCategory));
+      // const pool = enabledCategories.filter(c=>c!=='Explore Deeper' && (c!=='Adult'||showAdultCategory));
+      const pool = enabledCategories
       cat = pool[Math.floor(Math.random()*pool.length)]||pool[0];
     }
     const {question,speech} = getRandomQuestion(cat);

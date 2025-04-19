@@ -9,11 +9,9 @@
 </head>
 
 <body>
-
-  <!-- Logo Intro -->
-  <!-- <div id="logo-intro" class="logo-intro">
-    <img src="assets/logo.png" alt="Logo" class="logo" />
-  </div> -->
+  <div id="logo-intro">
+    <img src="assets/logo.png" alt="Logo" />
+  </div>
 
   <!-- Main App -->
   <!-- <div id="main-app" class="main-app hidden"> -->
@@ -40,13 +38,15 @@
 
     <div class="modal-content">
       <div class="modal-content">
+        <button class="random-toggle">🎲 Random</button>
         <button class="reset-loopback">🔁 Refresh</button>
-        <button class="adult-toggle">🔞 Adult</button>
         <button class="sound-toggle">🔊 Sound</button>
         <button class="speech-toggle">🔊 Speech</button>
       </div>
       <h3>Select Categories</h3>
       <div id="settings-categories" class="settings-categories">
+        <label for="category-list-select">Question Set:</label>
+        <select id="category-list-select"></select>
         <!-- Dynamically populated checkboxes -->
       </div>
       <div class="modal-buttons">
