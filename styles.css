@@ -33,7 +33,7 @@
 }
 
 body.dark .logofooter {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(20, 20, 20, 0.3);
 }
 
 @keyframes fadeInOut {
