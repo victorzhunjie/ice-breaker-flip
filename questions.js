@@ -854,6 +854,74 @@ const categories1 = {
       "Rúguǒ nǐ de shǒujī néng shuōhuà, tā huì shuō nǐ shénme?"
     ]
   },
+  "What If": {
+    "en": [
+      "What if you could time travel for one day — where and when would you go?",
+      "What if you could have dinner with any historical figure — who would it be and why?",
+      "What if money wasn’t an issue — what would you be doing right now?",
+      "What if you woke up with a superpower — what would it be and how would you use it?",
+      "What if you could live in any fictional universe — which one would you choose?",
+      "What if you had to eat only one meal for the rest of your life — what would it be?",
+      "What if you could switch lives with someone for a week — who would it be?",
+      "What if you found a suitcase with a million dollars — what would you do?",
+      "What if you could instantly learn any language — which would you pick and why?",
+      "What if you could talk to animals — what’s the first thing you’d ask?",
+      "What if you had 24 hours of complete freedom to do anything — what would you do?",
+      "What if you had to start over in a new country — where would you go?",
+      "What if you never had to sleep again — how would you spend that extra time?",
+      "What if you could relive one day in your life — which would it be and why?",
+      "What if your life was turned into a movie — what genre would it be?",
+      "What if you could only keep one memory — what would it be?",
+      "What if you could swap one of your skills for a new one — what would you trade?",
+      "What if you had the chance to meet your future self — what would you ask?",
+      "What if you could undo one decision — what would it be?",
+      "What if you were invisible for a day — what would you do?"
+    ],
+    "zh": [
+      "如果你能穿越一天，你会去哪里，什么时候？",
+      "如果你能和一位历史人物共进晚餐，会是谁？为什么？",
+      "如果钱不是问题，你现在会在做什么？",
+      "如果你醒来拥有一种超能力，你希望是什么？你会怎么用它？",
+      "如果你可以住在任何一个虚构的世界里，你会选哪个？",
+      "如果你这辈子只能吃一种食物，那会是什么？",
+      "如果你可以和一个人交换一周的人生，你会选谁？",
+      "如果你捡到一个装有一百万美元的箱子，你会怎么做？",
+      "如果你可以立刻学会一种语言，你会选哪种？为什么？",
+      "如果你能和动物说话，你第一个想问它什么？",
+      "如果你有24小时可以为所欲为，你会做什么？",
+      "如果你必须去另一个国家重新开始，你会选哪里？",
+      "如果你再也不用睡觉了，你会怎么利用这些额外的时间？",
+      "如果你可以重温你生命中的一天，会是哪一天？为什么？",
+      "如果你的人生被拍成电影，会是什么类型？",
+      "如果你只能保留一个记忆，那会是什么？",
+      "如果你可以用一个技能换一个新技能，你会换什么？",
+      "如果你可以见到未来的自己，你会问什么？",
+      "如果你能撤销一个决定，那会是什么？",
+      "如果你可以隐身一天，你会做什么？"
+    ],
+    "zh_roman": [
+      "Rúguǒ nǐ néng chuānyuè yītiān, nǐ huì qù nǎlǐ, shénme shíhòu?",
+      "Rúguǒ nǐ néng hé yī wèi lìshǐ rénwù gòng jìn wǎncān, huì shì shéi? Wèishéme?",
+      "Rúguǒ qián bù shì wèntí, nǐ xiànzài huì zài zuò shénme?",
+      "Rúguǒ nǐ xǐng lái yǒngyǒu yī zhǒng chāonénglì, nǐ xīwàng shì shénme? Nǐ huì zěnme yòng tā?",
+      "Rúguǒ nǐ kěyǐ zhù zài rènhé yīgè xūgòu de shìjiè lǐ, nǐ huì xuǎn nǎgè?",
+      "Rúguǒ nǐ zhè bèizi zhǐ néng chī yī zhǒng shíwù, nà huì shì shénme?",
+      "Rúguǒ nǐ kěyǐ hé yīgè rén jiāohuàn yī zhōu de rénshēng, nǐ huì xuǎn shéi?",
+      "Rúguǒ nǐ jiǎndào yīgè zhuāng yǒu yībǎi wàn měiyuán de xiāngzi, nǐ huì zěnme zuò?",
+      "Rúguǒ nǐ kěyǐ lìkè xuéhuì yī zhǒng yǔyán, nǐ huì xuǎn nǎ zhǒng? Wèishéme?",
+      "Rúguǒ nǐ néng hé dòngwù shuōhuà, nǐ dì yī gè xiǎng wèn tā shénme?",
+      "Rúguǒ nǐ yǒu 24 xiǎoshí kěyǐ wéi suǒ yù wéi, nǐ huì zuò shénme?",
+      "Rúguǒ nǐ bìxū qù lìng yīgè guójiā chóngxīn kāishǐ, nǐ huì xuǎn nǎlǐ?",
+      "Rúguǒ nǐ zàiyě bùyòng shuìjiào le, nǐ huì zěnme lìyòng zhèxiē èrzhì de shíjiān?",
+      "Rúguǒ nǐ kěyǐ chóng wēn nǐ shēngmìng zhōng de yītiān, huì shì nǎ yītiān? Wèishéme?",
+      "Rúguǒ nǐ de rénshēng bèi pāi chéng diànyǐng, huì shì shénme lèixíng?",
+      "Rúguǒ nǐ zhǐ néng bǎoliú yīgè jìyì, nà huì shì shénme?",
+      "Rúguǒ nǐ kěyǐ yòng yīgè jìnéng huàn yīgè xīn jìnéng, nǐ huì huàn shénme?",
+      "Rúguǒ nǐ kěyǐ jiàn dào wèilái de zìjǐ, nǐ huì wèn shénme?",
+      "Rúguǒ nǐ néng chèxiāo yīgè juédìng, nà huì shì shénme?",
+      "Rúguǒ nǐ kěyǐ yǐnshēn yītiān, nǐ huì zuò shénme?"
+    ]
+  },
   "Dating History": {
     "en": [
       "How many serious relationships have you had?",
@@ -1034,6 +1102,74 @@ const categories1 = {
       "Nǐ xīwàng biérén yuēhuì shí duō wèn nǐ shénme wèntí?",
       "Nǐ yīzhí xiǎng chángshì dàn hái méi zuòguò de làngmàn shì shì shénme?"
     ]
+  },
+  "First Time": {
+    "en": [
+      "What was your first job, and how did you get it?",
+      "Do you remember your first crush?",
+      "When was your first kiss, and what was it like?",
+      "What was the first concert you ever attended?",
+      "What was your first time traveling alone like?",
+      "What was the first big decision you ever made on your own?",
+      "What’s the first movie you remember watching in a cinema?",
+      "What was the first dish you ever cooked by yourself?",
+      "Do you remember your first day at school? How did it go?",
+      "When was the first time you felt truly independent?",
+      "Who was your first best friend, and how did you meet?",
+      "What was your first phone, and what did you use it for the most?",
+      "What’s the first book you remember loving?",
+      "What was your first heartbreak?",
+      "Do you remember your first trip on a plane?",
+      "What’s the first time you stayed up all night, and why?",
+      "What was your first big purchase with your own money?",
+      "What was the first pet you ever had?",
+      "What’s the first compliment you remember receiving?",
+      "What was your first social media account?"
+    ],
+    "zh": [
+      "你的第一份工作是什么？你是怎么得到的？",
+      "你还记得你第一次暗恋的人吗？",
+      "你第一次接吻是什么时候？感觉如何？",
+      "你第一次去的演唱会是什么？",
+      "你第一次一个人旅行是怎样的经历？",
+      "你第一次独立做出的重大决定是什么？",
+      "你第一次在电影院看电影是看什么？",
+      "你第一次自己做的一道菜是什么？",
+      "你还记得你第一天上学的情景吗？",
+      "你第一次真正感到独立是什么时候？",
+      "你第一个最好的朋友是谁？你们是怎么认识的？",
+      "你第一部手机是什么？你最常用它来做什么？",
+      "你最早喜欢的一本书是什么？",
+      "你第一次心碎是什么时候？",
+      "你还记得你第一次坐飞机吗？",
+      "你第一次熬夜通宵是什么时候？为什么？",
+      "你第一次用自己的钱买的大件物品是什么？",
+      "你养的第一个宠物是什么？",
+      "你记得收到的第一句赞美吗？",
+      "你用的第一个社交媒体账号是什么？"
+    ],
+    "zh_roman": [
+      "Nǐ de dì yī fèn gōngzuò shì shénme? Nǐ shì zěnme dédào de?",
+      "Nǐ hái jìdé nǐ dì yī cì ànliàn de rén ma?",
+      "Nǐ dì yī cì jiēwěn shì shénme shíhòu? Gǎnjué rúhé?",
+      "Nǐ dì yī cì qù de yǎnchànghuì shì shénme?",
+      "Nǐ dì yī cì yīgè rén lǚxíng shì zěnyàng de jīnglì?",
+      "Nǐ dì yī cì dúlì zuòchū de zhòngdà juédìng shì shénme?",
+      "Nǐ dì yī cì zài diànyǐngyuàn kàn diànyǐng shì kàn shénme?",
+      "Nǐ dì yī cì zìjǐ zuò de yī dào cài shì shénme?",
+      "Nǐ hái jìdé nǐ dì yī tiān shàngxué de qíngjǐng ma?",
+      "Nǐ dì yī cì zhēnzhèng gǎndào dúlì shì shénme shíhòu?",
+      "Nǐ dì yī gè zuì hǎo de péngyǒu shì shéi? Nǐmen shì zěnme rènshí de?",
+      "Nǐ dì yī bù shǒujī shì shénme? Nǐ zuì cháng yòng tā lái zuò shénme?",
+      "Nǐ zuì zǎo xǐhuān de yī běn shū shì shénme?",
+      "Nǐ dì yī cì xīn suì shì shénme shíhòu?",
+      "Nǐ hái jìdé nǐ dì yī cì zuò fēijī ma?",
+      "Nǐ dì yī cì áoyè tōngxiāo shì shénme shíhòu? Wèishéme?",
+      "Nǐ dì yī cì yòng zìjǐ de qián mǎi de dàjiàn wùpǐn shì shénme?",
+      "Nǐ yǎng de dì yī gè chǒngwù shì shénme?",
+      "Nǐ jìdé shōudào de dì yī jù zànměi ma?",
+      "Nǐ yòng de dì yī gè shèjiāo méitǐ zhànghào shì shénme?"
+    ]
   }
   // ,
   // "Random": {}
@@ -1045,10 +1181,12 @@ const romanization = {
   "Fun Facts": "Qù shì",
   "Career": "Zhí yè",
   "Travel": "Lǚ xíng",
-  "Reflection" : "Sīkǎo rénshēng", //思考人生
+  "Reflection": "Sīkǎo rénshēng", //思考人生
   "Technology": "Kē jì",
   "Dating History": "Qínggǎn lìchéng", // 情感历程
-  "Dating": "yuē huì", //约会
+  "Dating": "yuē huì", //约会,
+  "What If": "Jiǎ rú", //假如
+  "First Time": "Dì yī cì " // 第一次
   // "Adult": "Chéng rèn",
   // "Attraction": "Xī yǐn",
   // "Intimacy": "Qīn mì"

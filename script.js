@@ -313,6 +313,8 @@ document.addEventListener('DOMContentLoaded', () => {
       Technology:'科技',
       'Dating History':'感情经历',
       'Dating':'约会',
+      'First Time':'第一次',
+      "What If": "假如",
       Random:'随机'
     };
     if(currentLanguage==='zh') return cn[cat]||cat;
