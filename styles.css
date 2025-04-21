@@ -368,19 +368,24 @@ body.dark .footer {
   margin-bottom: 0.5rem;
 }
 
+.settings-container * {
+  outline: 1px solid red; /* helps visually debug stacking */
+}
+
 .settings-categories {
+  color: #e5e5f7;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(1, 1fr);
+  /* gap: px; */
   max-height: 300px;
   overflow-y: auto;
-  margin: 20px 0;
+  margin: 0px 0;
 }
 
 .settings-categories label {
   display: block;
-  margin-bottom: 15px;
-  font-size: 1.1rem;
+  margin-bottom: 2px;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -415,7 +420,7 @@ body.dark .footer {
 /* ---------- Toast Message ---------- */
 .toast {
   position: fixed;
-  top: 50%;
+  top: 100%;
   left: 50%;
   transform: translate(-50%, -50%);
   min-width: 200px;
@@ -427,6 +432,7 @@ body.dark .footer {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   z-index: 9999;
+  pointer-events: none; /* allows clicks to pass through */
 }
 
 .toast.show {

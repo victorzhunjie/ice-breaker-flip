@@ -6,10 +6,6 @@ setTimeout(() => {
 
 
 // Categories
-// const categorySets = {
-//   Default: categories1,
-//   Fun: categories2
-// };
 const categories = categories1
 const flipSound = new Audio('flip.mp3');
 const currentTheme = localStorage.getItem('theme') || 'light';
@@ -55,60 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingsToggle = document.querySelector('.settings-toggle');
   const settingsModal  = document.getElementById('settings-modal');
   const settingsCats   = document.getElementById('settings-categories');
-  const categoryListSelect  = document.getElementById('category-list-select');
   const btnSave        = document.getElementById('settings-save');
   const btnCancel      = document.getElementById('settings-cancel');
   const toast          = document.getElementById('toast');
-
-  // let selectedSetName = localStorage.getItem('selectedSet') || 'Default';
-  // let categories = categorySets[selectedSetName];
 
   function showToast(msg) {
     toast.textContent = msg;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2000);
   }
-
-  // Populate the dropdown
-  // Object.keys(categorySets).forEach(name => {
-  //   const opt = document.createElement('option');
-  //   opt.value = name;
-  //   opt.textContent = name;
-  //   if (name === selectedSetName) opt.selected = true;
-  //   categoryListSelect.append(opt);
-  // });
-
-  // function populateSelect() {
-  //   // clear any existing options
-  //   categoryListSelect.innerHTML = "";
-  
-  //   // populate from your categorySets keys
-  //   Object.keys(categorySets).forEach(name => {
-  //     const option = document.createElement("option");
-  //     option.value = name;
-  //     option.textContent = name;
-  //     // pre‑select the current set
-  //     if (name === selectedSetName) option.selected = true;
-  //     categoryListSelect.appendChild(option);
-  //   });
-  // }
-
-  document.querySelector('.settings-toggle').addEventListener('click', () => {
-    document.getElementById('settings-modal').style.display = 'block';
-    populateSelect();
-  });
-
-  // When the user picks a new set:
-  // categoryListSelect.addEventListener('change', e => {
-  //   selectedSetName = e.target.value;
-  //   localStorage.setItem('selectedSet', selectedSetName);
-  //   categories = categorySets[selectedSetName];
-  //   // reset enabled/categories history
-  //   enabledCategories = Object.keys(categories);
-  //   localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
-  //   Object.keys(questionHistory).forEach(cat => questionHistory[cat] = []);
-  //   renderCategories();
-  // });
 
   // —— RANDOM CATEGORY ——
   function toggleRandom() {
@@ -130,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reset loop‑back
   resetLoopback?.addEventListener('click', () => {
     Object.keys(questionHistory).forEach(cat => questionHistory[cat] = []);
-    showToast('✅ Questions refreshed');
+    // showToast('✅ Questions refreshed');
   });
 
   // —— SOUND —— 
@@ -222,23 +173,25 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   languageToggle.textContent = getLanguageLabel(currentLanguage);
 
-  // —— SETTINGS OVERLAY ——
   function addCategoryCheckbox(cat) {
     const label = document.createElement('label');
-    console.log('--', currentLanguage)
-    label.innerHTML = `<input type="checkbox" value="${cat}" ${enabledCategories.includes(cat) ? 'checked' : ''}/> ${getCategoryLabel(cat)}`;
-    settingsCats.append(label);
-  }  
+    label.style.display = 'block';              // ensure block layout
+    label.style.cursor  = 'pointer';            // show it’s clickable
+  
+    const input = document.createElement('input');
+    input.type    = 'checkbox';
+    input.value   = cat;
+    input.checked = enabledCategories.includes(cat);
+  
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(` ${getCategoryLabel(cat)}`));
+    settingsCats.appendChild(label);
+  }
+
+
   function openSettings() {
     settingsCats.innerHTML = '';
     Object.keys(categories).forEach(addCategoryCheckbox);
-
-    // Random-toggle
-    // const randLabel = document.createElement('label');
-    // randLabel.style.marginTop = '0.5rem';
-    // randLabel.innerHTML = `<input id="random-checkbox" type="checkbox" ${useRandomCategory?'checked':''}/> Random`;
-    // settingsCats.append(randLabel);
-
     settingsModal.style.display = 'flex';
   }
   function closeSettings() {
@@ -255,11 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .map(cb => cb.value);
     localStorage.setItem('enabledCategories', JSON.stringify(enabledCategories));
 
-    // // random
-    // const randCb = document.getElementById('random-checkbox');
-    // useRandomCategory = randCb.checked;
-    // localStorage.setItem('useRandomCategory', useRandomCategory);
-
     closeSettings();
     renderCategories();
   });
@@ -268,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function createBtn(cat, container) {
     const b = document.createElement('button');
     b.className = 'category-btn';
-    b.textContent = getCategoryLabel(cat);
+    b.textContent = getCategoryLabel(cat, false);
     b.onclick = () => showQuestion(cat);
     container.append(b);
   }
@@ -302,32 +250,44 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'Select a Category';
     }
   }
-  function getCategoryLabel(cat){
+  function getCategoryLabel(cat, showCount=true) {
     const cn = {
       'Get to Know You': '认识你',
-      Hobbies:'爱好',
-      'Fun Facts':'趣事',
-      Career:'职业',
-      Travel:'旅行',
-      Reflection : "思考人生",
-      Technology:'科技',
-      'Dating History':'感情经历',
-      'Dating':'约会',
-      'First Time':'第一次',
+      Hobbies: '爱好',
+      'Fun Facts': '趣事',
+      Career: '职业',
+      Travel: '旅行',
+      Reflection: "思考人生",
+      Technology: '科技',
+      'Dating History': '感情经历',
+      'Dating': '约会',
+      'First Time': '第一次',
       "What If": "假如",
-      Random:'随机'
+      Random: '随机'
     };
-    if(currentLanguage==='zh') return cn[cat]||cat;
-    if(currentLanguage==='yue') return cn[cat]||cat;
-    if(currentLanguage.startsWith('en+zh')) return `${cat} / ${cn[cat]||cat}`;
-    return cat;
+
+    let count = ''
+    if (cat !== 'Random' && showCount) { 
+      const total = categories[cat]?.en?.length;
+      const remaining = questionHistory[cat]?.length ?? total;  // if never initialized, assume full
+      const used = total - remaining;
+      count = `(${used}/${total})`;
+    }
+
+    switch (currentLanguage) {
+      case 'zh':
+      case 'yue':
+        return `${cn[cat] || cat} ${count}`;
+      case 'en+zh':
+      case 'en+zh+roman':
+        return `${cat} / ${cn[cat] || cat} ${count}`;
+      default:
+        return `${cat} ${count}`;    }
   }
 
   // —— SHOW QUESTION ——
   function showQuestion(cat) {
     if (cat==='Random') {
-      // pick random from enabled
-      // const pool = enabledCategories.filter(c=>c!=='Explore Deeper' && (c!=='Adult'||showAdultCategory));
       const pool = enabledCategories
       cat = pool[Math.floor(Math.random()*pool.length)]||pool[0];
     }
@@ -338,6 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
     card.classList.add('flipped');
     playFlipSound();
     if (speechEnabled) speakText(speech);
+    renderCategories();
   }
 
   function getRandomQuestion(cat) {

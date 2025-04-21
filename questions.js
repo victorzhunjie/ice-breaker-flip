@@ -987,8 +987,6 @@ const categories1 = {
       "Nǐ yòng de dì yī gè shèjiāo méitǐ zhànghào shì shénme?"
     ]
   }
-  // ,
-  // "Random": {}
 };
 
 const romanization = {
