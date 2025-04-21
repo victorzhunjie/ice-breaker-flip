@@ -1001,7 +1001,4 @@ const romanization = {
   "Dating": "yuē huì", //约会,
   "What If": "Jiǎ rú", //假如
   "First Time": "Dì yī cì " // 第一次
-  // "Adult": "Chéng rèn",
-  // "Attraction": "Xī yǐn",
-  // "Intimacy": "Qīn mì"
 };
